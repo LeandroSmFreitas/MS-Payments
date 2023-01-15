@@ -2,6 +2,7 @@ package br.com.leandro.food.pagamentos.web.rest;
 
 import br.com.leandro.food.pagamentos.dto.PaymentDto;
 import br.com.leandro.food.pagamentos.service.PaymentService;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,10 +48,20 @@ public class PaymentResourse {
         return ResponseEntity.ok(updatedPayment);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/payments/{id}")
     public ResponseEntity<PaymentDto> remover(@PathVariable @NotNull Long id) {
         paymentService.DeletePayment(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/payments/{id}/confirm")
+    @CircuitBreaker(name = "updateOrder", fallbackMethod = "confirmedPaymentWithIntegrationPending")
+    public void confirmPayment(@PathVariable @NotNull Long id){
+        paymentService.confirmPayment(id);
+    }
+
+    public void confirmedPaymentWithIntegrationPending(@PathVariable @NotNull Long id){
+        paymentService.changeStatus(id);
     }
 
 }

@@ -26,11 +26,22 @@ dependencies {
 	implementation 'org.flywaydb:flyway-core'
 	implementation 'org.flywaydb:flyway-mysql'
     implementation 'org.modelmapper:modelmapper:3.1.1'
-    compileOnly 'org.projectlombok:lombok'
+    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client:3.1.2'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.2'
+	implementation 'io.github.resilience4j:resilience4j-spring-boot2:1.7.0'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator:3.0.1'
+	implementation 'org.springframework.boot:spring-boot-starter-aop:3.0.1'
+	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'com.mysql:mysql-connector-j'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation "io.github.resilience4j:resilience4j-circuitbreaker:1.7.0"
+	implementation "io.github.resilience4j:resilience4j-ratelimiter:1.7.0"
+	implementation "io.github.resilience4j:resilience4j-retry:1.7.0"
+	implementation "io.github.resilience4j:resilience4j-bulkhead:1.7.0"
+	implementation "io.github.resilience4j:resilience4j-cache:1.7.0"
+	implementation "io.github.resilience4j:resilience4j-timelimiter:1.7.0"
 }
 
 tasks.named('test') {
